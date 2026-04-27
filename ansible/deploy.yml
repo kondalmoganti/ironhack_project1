@@ -1,0 +1,98 @@
+---
+- name: Install Docker on all servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: Update apt
+      apt:
+        update_cache: yes
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Start Docker
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ubuntu user to docker group
+      user:
+        name: ubuntu
+        groups: docker
+        append: yes
+
+- name: Deploy PostgreSQL
+  hosts: db
+  become: yes
+  tasks:
+    - name: Run postgres
+      community.docker.docker_container:
+        name: db
+        image: postgres:15-alpine
+        state: started
+        restart_policy: unless-stopped
+        published_ports:
+          - "5432:5432"
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+
+- name: Deploy Backend
+  hosts: backend
+  become: yes
+  tasks:
+    - name: Run redis
+      community.docker.docker_container:
+        name: redis
+        image: redis:alpine
+        state: started
+        restart_policy: unless-stopped
+        published_ports:
+          - "6379:6379"
+
+    - name: Run worker
+      community.docker.docker_container:
+        name: worker
+        image: kmoganti/worker:latest
+        state: started
+        restart_policy: unless-stopped
+        env:
+          REDIS_HOST: "10.0.2.71"
+          DB_HOST: "10.0.3.143"
+
+- name: Deploy Frontend
+  hosts: frontend
+  become: yes
+  tasks:
+    - name: Run vote
+      community.docker.docker_container:
+        name: vote
+        image: kmoganti/vote:latest
+        state: started
+        restart_policy: unless-stopped
+        published_ports:
+          - "8080:80"
+        env:
+          REDIS_HOST: "10.0.2.71"
+
+    - name: Run result
+      community.docker.docker_container:
+        name: result
+        image: kmoganti/result:latest
+        state: started
+        restart_policy: unless-stopped
+        recreate: yes
+        published_ports:
+          - "8081:80"
+        env:
+          DB_HOST: "10.0.3.143"
+          POSTGRES_HOST: "10.0.3.143"
+          PG_HOST: "10.0.3.143"
+          PG_PORT: "5432"
+          PG_USER: "postgres"
+          PG_PASSWORD: "postgres"
+          PG_DATABASE: "postgres"
