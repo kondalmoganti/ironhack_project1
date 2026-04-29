@@ -6,7 +6,8 @@ A production-style DevOps project that deploys a containerized voting applicatio
 
 ## 🏗️ Architecture Diagram
 
-![Architecture](./assets/architecture.png)
+<img width="1536" height="1024" alt="architecture diagram" src="https://github.com/user-attachments/assets/2d220aa2-2b43-4a95-a224-70673614365e" />
+
 
 ---
 
