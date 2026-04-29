@@ -1,6 +1,9 @@
 # 🚀 Multi-Tier Voting App Deployment (AWS DevOps Project)
 
 ## 📌 Overview
+
+<img width="1480" height="1109" alt="image" src="https://github.com/user-attachments/assets/c188e712-db89-4071-a3c0-6c2991770097" />
+
 This project demonstrates a production-style DevOps setup using Terraform, Docker, Ansible, AWS ALB, Route53, and HTTPS.
 
 ---
