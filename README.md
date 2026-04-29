@@ -64,7 +64,7 @@ terraform apply
 ### Step 3 — SSH Access
 
 ```bash
-ssh -i kondal.pem ubuntu@<frontend-public-ip>
+ssh -i xxxxx.pem ubuntu@<frontend-public-ip>
 ```
 
 ### Step 4 — Ansible Deployment
