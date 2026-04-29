@@ -95,6 +95,8 @@ https://kondal.online/result
 | PG_DATABASE | postgres |
 
 ---
+Repo structure comment
+<img width="315" height="793" alt="image" src="https://github.com/user-attachments/assets/a333df30-0ec1-44aa-872d-84c46bd2474f" />
 
 ## ⚠️ Known Issues / Limitations
 
@@ -109,8 +111,8 @@ https://kondal.online/result
 ## 👨‍💻 Author
 
 Kondal Moganti  
-GitHub: https://github.com/kondalmoganti  
-LinkedIn: https://www.linkedin.com/in/YOUR-LINK-HERE  
+GitHub: https://github.com/kondalmoganti/ironhack_project1/  
+LinkedIn: https://www.linkedin.com/in/dr-kondal-moganti-1748b8149/
 
 ---
 
