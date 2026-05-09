@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: result
+  namespace: voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: result
+  template:
+    metadata:
+      labels:
+        app: result
+    spec:
+      containers:
+        - name: result
+          image: kmoganti/result:eks-v1
+          ports:
+            - containerPort: 80
+          env:
+            - name: PG_HOST
+              value: postgres
+            - name: PG_PORT
+              value: "5432"
+            - name: PG_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_USER
+            - name: PG_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_PASSWORD
+            - name: PG_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-secret
+                  key: POSTGRES_DB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: result
+  namespace: voting-app
+spec:
+  type: ClusterIP
+  selector:
+    app: result
+  ports:
+    - port: 80
+      targetPort: 80

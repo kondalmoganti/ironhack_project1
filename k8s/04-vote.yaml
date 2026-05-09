@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote
+  namespace: voting-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vote
+  template:
+    metadata:
+      labels:
+        app: vote
+    spec:
+      containers:
+        - name: vote
+          image: kmoganti/vote:eks-v1
+          ports:
+            - containerPort: 80
+          env:
+            - name: REDIS_HOST
+              value: redis
+            - name: REDIS_PORT
+              value: "6379"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vote
+  namespace: voting-app
+spec:
+  type: ClusterIP
+  selector:
+    app: vote
+  ports:
+    - port: 80
+      targetPort: 80

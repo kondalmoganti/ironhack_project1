@@ -1,11 +1,30 @@
-# Terraform
-.terraform/
+# Terraform local files
+**/.terraform/
 *.tfstate
 *.tfstate.*
 .terraform.lock.hcl
+crash.log
+crash.*.log
+*.tfvars
+*.tfvars.json
 
-# SSH keys
+# SSH private keys
 *.pem
+*.key
 
-# Ansible
-*.retry
+# .NET build output
+worker/bin/
+worker/obj/
+
+# Node.js
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.env
+
+# OS/editor
+.DS_Store
+.vscode/
+.idea/
