@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: vote
-          image: kmoganti/vote:eks-v1
+          image: kmoganti/vote:eks-v2
           ports:
             - containerPort: 80
           env:
