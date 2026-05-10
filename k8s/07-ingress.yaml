@@ -11,7 +11,7 @@ spec:
   rules:
     - http:
         paths:
-          # Vote app main and sub-paths: /vote/... -> /...
+          # Vote app
           - path: /vote(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
@@ -20,7 +20,7 @@ spec:
                 port:
                   number: 80
 
-          # Vote app static assets: /static/... -> /static/...
+          # Vote static files
           - path: /()(static/.*)
             pathType: ImplementationSpecific
             backend:
@@ -29,7 +29,16 @@ spec:
                 port:
                   number: 80
 
-          # Result app main and sub-paths: /result/... -> /...
+          # IMPORTANT: Result Socket.IO path must stay /result/socket.io
+          - path: /()(result/socket.io.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: result
+                port:
+                  number: 80
+
+          # Result app main route
           - path: /result(/|$)(.*)
             pathType: ImplementationSpecific
             backend:
@@ -38,7 +47,7 @@ spec:
                 port:
                   number: 80
 
-          # Result app frontend assets: /angular.min.js, /app.js, etc.
+          # Result frontend assets
           - path: /()(angular.min.js|app.js|socket.io.js|stylesheets/.*)
             pathType: ImplementationSpecific
             backend:
